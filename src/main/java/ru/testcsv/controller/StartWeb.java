@@ -22,7 +22,7 @@ public class StartWeb {
 
     @GetMapping("/")
     public String start() {
-        csv.parfFile();
+        //csv.parfFile();
         return "index";
     }
 
@@ -35,6 +35,8 @@ public class StartWeb {
         //model.addAttribute("formid", list.get(0).getFormid());
         model.addAttribute("ssoid", 1);
         model.addAttribute("formid", 2);
+        model.addAttribute("ssoid", 2);
+        model.addAttribute("formid", 3);
         return "query1";
     }
 

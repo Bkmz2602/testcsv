@@ -1,16 +1,18 @@
 package ru.testcsv.model;
 
+import com.opencsv.bean.CsvBindByName;
 import lombok.Data;
 import lombok.ToString;
+import ru.testcsv.pojo.PojoTableCsv;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.SimpleFormatter;
 
 @Entity
 @Data
@@ -19,43 +21,65 @@ public class Tablecsv {
 
     @Id
     @GeneratedValue
-    private Long ssoid;
+    private Long id;
     @Column
+    @CsvBindByName
+    private String ssoid;
+    @Column
+    @CsvBindByName
     private Date ts;
     @Column
+    @CsvBindByName
     private String grp;
     @Column
+    @CsvBindByName
     private String type;
     @Column
+    @CsvBindByName
     private String subtype;
     @Column
+    @CsvBindByName
     private String url;
     @Column
-    private Long orgid;
+    @CsvBindByName
+    private String orgid;
     @Column
-    private Long formid;
+    @CsvBindByName
+    private String formid;
     @Column
+    @CsvBindByName
+    private String code;
+    @Column
+    @CsvBindByName
     private String ltpa;
     @Column
+    @CsvBindByName
     private String sudirresponse;
     @Column
+    @CsvBindByName
     private Date ymdh;
 
     public Tablecsv(){}
 
-    public Tablecsv(String[] line) throws ParseException {
-        SimpleDateFormat time = new SimpleDateFormat("HH:MM");
+    public Tablecsv(PojoTableCsv pojoTableCsv) throws ParseException {
+
+        this.ssoid = pojoTableCsv.getSsoid();
+        this.ts = new Time(pojoTableCsv.getTs());
+        this.grp = pojoTableCsv.getGrp();
+        this.type = pojoTableCsv.getType();
+        this.subtype = pojoTableCsv.getSubtype();
+        this.url = pojoTableCsv.getUrl();
+        this.orgid = pojoTableCsv.getOrgid();
+        this.formid = pojoTableCsv.getFormid();
+        this.code = pojoTableCsv.getCode();
+        this.ltpa = pojoTableCsv.getLtpa();
+        this.sudirresponse = pojoTableCsv.getSudirresponse();
+        this.ymdh = stringToDate(pojoTableCsv.getYmdh());
+    }
+
+    private Date stringToDate(String ymdh) throws ParseException {
         SimpleDateFormat date = new SimpleDateFormat("YYYY-MM-DD HH:MM");
-        ssoid = Long.parseLong(line[0]);
-        ts = time.parse(line[1]);
-        grp = line[2];
-        type = line[3];
-        subtype = line[4];
-        url = line[5];
-        orgid = Long.parseLong(line[6]);
-        formid = Long.parseLong(line[7]);
-        ltpa = line[8];
-        sudirresponse = line[9];
-        ymdh = date.parse(line[10]);
+        ymdh = ymdh.substring(0,9)+" "+ymdh.substring(11)+":00";
+        return date.parse(ymdh);
     }
 }
