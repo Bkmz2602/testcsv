@@ -1,7 +1,7 @@
 package ru.testcsv.model;
 
-import com.opencsv.bean.CsvBindByName;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import ru.testcsv.pojo.PojoTableCsv;
 
@@ -17,52 +17,38 @@ import java.util.Date;
 @Entity
 @Data
 @ToString
+@NoArgsConstructor
 public class Tablecsv {
 
     @Id
     @GeneratedValue
     private Long id;
     @Column
-    @CsvBindByName
     private String ssoid;
     @Column
-    @CsvBindByName
     private Date ts;
     @Column
-    @CsvBindByName
     private String grp;
     @Column
-    @CsvBindByName
     private String type;
     @Column
-    @CsvBindByName
     private String subtype;
     @Column
-    @CsvBindByName
     private String url;
     @Column
-    @CsvBindByName
     private String orgid;
     @Column
-    @CsvBindByName
     private String formid;
     @Column
-    @CsvBindByName
     private String code;
     @Column
-    @CsvBindByName
     private String ltpa;
     @Column
-    @CsvBindByName
     private String sudirresponse;
     @Column
-    @CsvBindByName
     private Date ymdh;
 
-    public Tablecsv(){}
-
     public Tablecsv(PojoTableCsv pojoTableCsv) throws ParseException {
-
         this.ssoid = pojoTableCsv.getSsoid();
         this.ts = new Time(pojoTableCsv.getTs());
         this.grp = pojoTableCsv.getGrp();
